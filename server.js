@@ -44,5 +44,4 @@ app.post('/addEntry', (req, res) => {
     userresponse: req.body.userresponse,
   };
   projectData = newEntry;
-  console.log(projectData);
 });
