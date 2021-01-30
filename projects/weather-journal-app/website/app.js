@@ -1,26 +1,9 @@
 /* Global Variables */
+// Create a new date instance dynamically with JS
+let d = new Date();
+let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+console.log(newDate);
 
-// MANUELL POST:
-// const postData = async ( url = '', data = {})=>{
-//   console.log(data)
-//     const response = await fetch(url, {
-//     method: 'POST', // *GET, POST, PUT, DELETE, etc.
-//     credentials: 'same-origin', // include, *same-origin, omit
-//     headers: {
-//         'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(data), // body data type must match "Content-Type" header
-//   });
-//
-//     try {
-//       const newData = await response.json();
-//       return newData
-//     }catch(error) {
-//     console.log("error", error);
-//     }
-// };
-//
-// postData('/newPost', {temperature:'seagull', userResponse:'blabla', date:'culo'});
 
 // RETRIVE FROM OPENWEATHER
 
@@ -36,10 +19,10 @@ console.log(newFeel);
 getInfo(baseURL, newZip, apiKey)
 .then(function(data){
   console.log(data)
-  postData('/addEntry', {temperature: data.main.temp, date: newDate, userresponse: newFeel});
+  postData('/addEntry', {temperature: data.main.temp, city: data.name, date: newDate, userresponse: newFeel});
 })
-updateUI();
-};
+.then(function(){updateUI()})
+}
 
 
 const getInfo = async (baseURL, zip , key)=>{
@@ -52,14 +35,14 @@ const getInfo = async (baseURL, zip , key)=>{
     console.log("error", error);
     // appropriately handle the error
   }
-};
+}
 
 const postData = async (url = '', data = {}) => {
   const response = await fetch(url, {
     method: 'POST',
     credentials: 'same-origin',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(data),
   });
@@ -68,21 +51,18 @@ const postData = async (url = '', data = {}) => {
     console.log(newData);
     return newData
   }catch(error) {console.log("error", error);}
-};
+}
 
 const updateUI = async () => {
   const request = await fetch('/all');
   try {
     const allData = await request.json();
-    document.getElementById('date').innerHTML = allData[allData.length - 1].date;
-    document.getElementById('temp').innerHTML = allData[allData.length - 1].temperature;
-    document.getElementById('content').innerHTML = allData[allData.length -1].userresponse;
+    console.log(allData);
+    document.getElementById('date').innerHTML = 'date: ' + allData.date;
+    document.getElementById('city').innerHTML = 'your Zipcode corrisponds to: ' + allData.city; 
+    document.getElementById('temp').innerHTML = 'temperature: ' + allData.temperature;
+    document.getElementById('content').innerHTML = 'your feeling: ' + allData.userresponse;
   }catch(error){
     console.log("error", error);
   }
-};
-
-// Create a new date instance dynamically with JS
-let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
-console.log(newDate);
+}
