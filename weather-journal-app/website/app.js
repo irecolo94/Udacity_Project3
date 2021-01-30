@@ -1,30 +1,37 @@
 // Global Variables
 let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
 
-let baseURL = 'https://api.openweathermap.org/data/2.5/weather?zip=';
-let apiKey = '&appid=6e30485752cf2a3013a66cca6d1829f6';
+const baseURL = 'https://api.openweathermap.org/data/2.5/weather?zip=';
+const apiKey = '&appid=6e30485752cf2a3013a66cca6d1829f6';
 
 // RETRIVE FROM OPENWEATHER
 document.getElementById('generate').addEventListener('click', performAction);
 
-function performAction(e){
-const newZip =  document.getElementById('zip').value;
-const newFeel = document.getElementById('feelings').value;
-getInfo(baseURL, newZip, apiKey)
-.then(function(data){
-  postData('/addEntry', {temperature: data.main.temp, city: data.name, date: newDate, userresponse: newFeel});
-})
-.then(function(){updateUI()})
+function performAction(e) {
+  const newZip = document.getElementById('zip').value;
+  const newFeel = document.getElementById('feelings').value;
+  getInfo(baseURL, newZip, apiKey)
+    .then(function(data) {
+      postData('/addEntry', {
+        temperature: data.main.temp,
+        city: data.name,
+        date: newDate,
+        userresponse: newFeel
+      });
+    })
+    .then(function() {
+      updateUI()
+    })
 }
 
 // GET data from given baseurl
-const getInfo = async (baseURL, zip , key)=>{
-  const res = await fetch(baseURL+zip+key)
+const getInfo = async (baseURL, zip, key) => {
+  const res = await fetch(baseURL + zip + key)
   try {
     const data = await res.json();
     return data;
-  }  catch(error) {
+  } catch (error) {
     console.log("error", error);
   }
 }
@@ -43,7 +50,9 @@ const postData = async (url = '', data = {}) => {
     const newData = await response.json();
     console.log(newData);
     return newData
-  }catch(error) {console.log("error", error);}
+  } catch (error) {
+    console.log("error", error);
+  }
 }
 
 // DYNAMICALLY UPDATE UI
@@ -55,7 +64,7 @@ const updateUI = async () => {
     document.getElementById('city').innerHTML = 'your Zipcode corrisponds to: ' + allData.city;
     document.getElementById('temp').innerHTML = 'temperature: ' + allData.temperature;
     document.getElementById('content').innerHTML = 'your feeling: ' + allData.userresponse;
-  }catch(error){
+  } catch (error) {
     console.log("error", error);
   }
 }
