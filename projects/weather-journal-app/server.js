@@ -34,7 +34,11 @@ app.get('/', (req, res)=> {
   res.send(projectData);
 });
 
-
+// app.get('/api.openweathermap.org/data/2.5/weather?zip=85254&appid=6e30485752cf2a3013a66cca6d1829f6', (req, res) => {
+//   res.send(data);
+// });
+ //statt '/' das hier: baseURL+zip+key
+//
 // post:
 //
 
@@ -46,7 +50,7 @@ app.post('/', (req, res)=> {
 const data = [];
 app.get('/all', (req,res) => {
   res.send(data);
-});
+})
 
 // app.post('/addEntry', (req, res) => {
 //   let data = req.body;
