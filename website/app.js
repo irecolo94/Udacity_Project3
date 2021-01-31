@@ -1,9 +1,9 @@
 // Global Variables
 let d = new Date();
-let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
+let newDate = (d.getMonth() + 1) + '.' + d.getDate() + '.' + d.getFullYear();
 
 const baseURL = 'https://api.openweathermap.org/data/2.5/weather?zip=';
-const apiKey = '&appid=6e30485752cf2a3013a66cca6d1829f6';
+const apiKey = '&appid=6e30485752cf2a3013a66cca6d1829f6&units=metric';
 
 // RETRIVE FROM OPENWEATHER
 document.getElementById('generate').addEventListener('click', performAction);
